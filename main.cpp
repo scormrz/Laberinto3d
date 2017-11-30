@@ -12,6 +12,25 @@ GLfloat yi = -8;
 int px=0;
 int py=9;
 
+
+//Prueba gluLookAt
+
+GLfloat la1=0.0;
+GLfloat la2=0.0;
+GLfloat la3=0.5;
+GLfloat la4=0.0;
+GLfloat la5=0.0;
+GLfloat la6=0.0;
+GLfloat la7=0.0;
+GLfloat la8=1.0;
+GLfloat la9=0.0;
+
+double rx=0,ry=0,rz=0,pxx,pyy=0,pz=0;
+
+
+
+/////////////////////////
+
 GLint escala = 1;
 
 GLdouble anguloY = 0;
@@ -95,6 +114,7 @@ int mapa[17][22] = {
 
 void init(void){
 	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -224,7 +244,8 @@ void ArrowKey(int key, int x, int y){
 void display(void){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(-10 + rx, 9 + ry, -10 + rz, pxx, pyy, pz, 0, 1, 0);
+	//gluLookAt(0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glPushMatrix();
 	glTranslatef(xi, yi, -3);
 	glScaled(escala, escala, 1.0);
@@ -239,10 +260,10 @@ void display(void){
 	//Suelo
 	cargarTextura(_text1);
 	glBegin(GL_POLYGON);
-		glTexCoord2i(0, 0);		glVertex3f(0, 0, 0); 
-		glTexCoord2i(1, 0);		glVertex3f(0,17,0);      
-		glTexCoord2i(1, 1);		glVertex3f(17, 17, 0);     
-		glTexCoord2i(0, 1);		glVertex3f(17, 0, 0);  
+	glTexCoord2f(0.0, 0.0);		glVertex3f(0, 0, 0); 
+	glTexCoord2f(1, 0.0);		glVertex3f(0,17,0);      
+	glTexCoord2f(1.0, 1.0);		glVertex3f(17, 17, 0);     
+	glTexCoord2f(0.0, 1.0);		glVertex3f(17, 0, 0);  
 	glEnd();
 	
 	for (int i=0;i<17;i++)
@@ -316,86 +337,181 @@ void muro(int x,int y)
 	//Frontal Y
 	cargarTextura(_text6);
 	glBegin(GL_POLYGON);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(x,y,1);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(x + 1,y,1);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(x + 1,y + 1,1);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(x,y + 1,1);
+		glTexCoord2f(0.0, 0.0);		glVertex3f(x,y,1);
+		glTexCoord2f(1.0, 0.0);		glVertex3f(x + 1,y,1);
+		glTexCoord2f(1.0, 1.0);		glVertex3f(x + 1,y + 1,1);
+		glTexCoord2f(0.0, 1.0);		glVertex3f(x,y + 1,1);
 	glEnd();
 	
 	//lateral izquierdo
 	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(x,y,0.0);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(x,y,1.0);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(x,y + 1,1.0);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(x,y + 1,0.0);
+		glTexCoord2f(0.0, 0.0);		glVertex3f(x,y,0.0);
+		glTexCoord2f(1.0, 0.0);		glVertex3f(x,y,1.0);
+		glTexCoord2f(1.0, 1.0);		glVertex3f(x,y + 1,1.0);
+		glTexCoord2f(0.0, 1.0);		glVertex3f(x,y + 1,0.0);
 	glEnd();
 	
 	//Lateral derecha
 	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(x+1,y,0.0);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(x+1,y,1.0);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(x+1,y + 1,1.0);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(x+1,y + 1,0.0);
+		glTexCoord2f(0.0, 0.0);		glVertex3f(x+1,y,0.0);
+		glTexCoord2f(1.0, 0.0);		glVertex3f(x+1,y,1.0);
+		glTexCoord2f(1.0, 1.0);		glVertex3f(x+1,y + 1,1.0);
+		glTexCoord2f(0.0, 1.0);		glVertex3f(x+1,y + 1,0.0);
 	glEnd();
 	
 	//Lateral abajo y
 	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-	glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(x+1,y,0.0);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(x+1,y,1.0);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(x,y,1.0);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(x,y,0.0);
+		glTexCoord2f(0.0, 0.0);		glVertex3f(x+1,y,0.0);
+		glTexCoord2f(1.0, 0.0);		glVertex3f(x+1,y,1.0);
+		glTexCoord2f(1.0, 1.0);		glVertex3f(x,y,1.0);
+		glTexCoord2f(0.0, 1.0);		glVertex3f(x,y,0.0);
 	glEnd();
 	
 	//Lateral Arriba y
 	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-	glTexCoord2f(0.0f, 0.0f);
-		glVertex3f(x+1,y+1,0.0);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex3f(x+1,y+1,1.0);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex3f(x,y + 1,1.0);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex3f(x,y + 1,0.0);
+		glTexCoord2f(0.0, 0.0);		glVertex3f(x+1,y+1,0.0);
+		glTexCoord2f(1.0, 0.0);		glVertex3f(x+1,y+1,1.0);
+		glTexCoord2f(1.0, 1.0);		glVertex3f(x,y + 1,1.0);
+		glTexCoord2f(0.0, 1.0);		glVertex3f(x,y + 1,0.0);
 	glEnd();
 	
 	
 }
 
 void reshape(int w, int h){
-	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	//glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();//Inicializa la matriz de proyeccion
-	glOrtho(-10.0, 10.0, -10.00, 10.0, 0.1, 20.0); // WorkSpace
+	gluPerspective(70,(GLfloat)h/(GLfloat)w,1,300);
+	//glOrtho(-10.0, 10.0, -10.00, 10.0, 0.1, 20.0); // WorkSpace
 	glMatrixMode(GL_MODELVIEW); // cambiamos la matrix :D
-	
+	glLoadIdentity();
 }
 void keyboard(unsigned char key, int x, int y){
 	switch (key)
 	{
-	case 27:
-		exit(0);
+		case 27:
+			exit(0);
 		break;
+		
+//		////Pruebas///
+//		
+//		case 113:
+//			la1 += 0.1;
+//		break;
+//		case 119:
+//			la1 -= 0.1;
+//		break;
+//		
+//		case 101:
+//			la2 += 0.1;
+//		break;
+//		case 114:
+//			la2 -= 0.1;
+//		break;
+//		
+//		case 116:
+//			la3 += 0.1;
+//		break;
+//		case 121:
+//			la3 -= 0.1;
+//		break;
+//		case 117:
+//			la4 += 0.1;
+//		break;
+//		case 105:
+//			la4 -= 0.1;
+//		break;
+//		case 111:
+//			la5 += 0.1;
+//		break;
+//			
+//		case 112:
+//			la5 -= 0.1;
+//		break;
+//		case 97:
+//			la6 += 0.1;
+//		break;
+//			la6 -= 0.1;
+//		case 115:
+//		
+//		break;
+//		case 100:
+//			la7 += 0.1;
+//		break;
+//			la7 -= 0.1;
+//		case 102:
+//		
+//		break;
+//		case 103:
+//			la8 += 0.1;
+//		break;
+//		case 104:
+//			la8 -= 0.1;
+//		break;
+//		case 106:
+//			la9 += 0.1;
+//		break;
+//		case 107:
+//			la9 -= 0.1;
+//		break;
+//		
+//		
+//		//////	
+		
+		case 'd':
+			rx=rx+0.2;
+		break;
+		case 'a':
+			rx=rx-0.2;
+		break;
+		case 'l':
+			pxx=pxx+0.2;
+		break;
+		case 'j':
+			pxx=pxx-0.2;
+		break;
+		case 'q':
+			ry=ry+0.2;
+		break;
+		case 'e':
+			ry=ry-0.2;
+		break;
+		case 'u':
+			pyy=pyy+0.2;
+		break;
+		case 'o':
+			pyy=pyy-0.2;
+		break;
+		
+		case 49:
+			ry=ry+0.2;
+			pyy=pyy+0.2;
+		break;
+		case 50:
+			ry=ry-0.2;
+			pyy=pyy-0.2;
+		break;
+		case 'w':
+			rz=rz+0.2;
+		break;
+		case 's':
+			rz=rz-0.2;
+		break;
+		case 'i':
+			pz=pz+0.8;
+		break;
+		case 'k':
+			pz=pz-0.8;
+		break;
+		
+		
 	}
+			
 }
 
 
