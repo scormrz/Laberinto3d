@@ -237,12 +237,12 @@ void display(void){
 	mapa[px][py]=2;
 	
 	//Suelo
+	cargarTextura(_text1);
 	glBegin(GL_POLYGON);
-		glColor3f(1,1,1);
-		glVertex3f(0, 0, 0); 
-		glVertex3f(0,17,0);      
-		glVertex3f(17, 17, 0);     
-		glVertex3f(17, 0, 0);  
+		glTexCoord2i(0, 0);		glVertex3f(0, 0, 0); 
+		glTexCoord2i(1, 0);		glVertex3f(0,17,0);      
+		glTexCoord2i(1, 1);		glVertex3f(17, 17, 0);     
+		glTexCoord2i(0, 1);		glVertex3f(17, 0, 0);  
 	glEnd();
 	
 	for (int i=0;i<17;i++)
@@ -314,47 +314,67 @@ void mono(int x,int y)
 void muro(int x,int y)
 {
 	//Frontal Y
+	cargarTextura(_text6);
 	glBegin(GL_POLYGON);
-		glColor3f(0,0,1);
+		glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(x,y,1);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x + 1,y,1);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(x + 1,y + 1,1);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(x,y + 1,1);
 	glEnd();
 	
 	//lateral izquierdo
+	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glColor3f(1.0,0.0,0.0);
+		glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(x,y,0.0);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x,y,1.0);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(x,y + 1,1.0);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(x,y + 1,0.0);
 	glEnd();
 	
 	//Lateral derecha
+	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glColor3f(0.5,1,1);
+		glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(x+1,y,0.0);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x+1,y,1.0);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(x+1,y + 1,1.0);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(x+1,y + 1,0.0);
 	glEnd();
 	
 	//Lateral abajo y
+	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glColor3f(0.8,0.4,0);
+	glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(x+1,y,0.0);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x+1,y,1.0);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(x,y,1.0);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(x,y,0.0);
 	glEnd();
 	
 	//Lateral Arriba y
+	cargarTextura(_text3);
 	glBegin(GL_POLYGON);
-		glColor3f(1,1,0.2);
+	glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(x+1,y+1,0.0);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(x+1,y+1,1.0);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(x,y + 1,1.0);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex3f(x,y + 1,0.0);
 	glEnd();
 	
